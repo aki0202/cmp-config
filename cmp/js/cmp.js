@@ -4,25 +4,22 @@
 
 // Self-invoking async function to bootstrap Klaro
 (async function() {
-    // 1️⃣ Fetch the centralized Klaro configuration
     const res = await fetch('https://aki0202.github.io/cmp-config/cmp/klaro-config.json');
     const config = await res.json();
   
-    // 2️⃣ Set global Klaro configuration
-    window.klaroConfig = config;
-  
-    // 3️⃣ Initialize Klaro
-    klaro.setup(config);
-  
-    // 4️⃣ Initialize Google Consent Mode defaults (denied by default)
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('consent', 'default', {
-      ad_storage: 'denied',
-      analytics_storage: 'denied',
-      functionality_storage: 'granted',
-      security_storage: 'granted'
+    // Fix callbacks here
+    config.services.forEach(service => {
+      if (service.name === 'google-analytics') {
+        service.callback = function(consent) { if (consent) loadGA(); };
+      }
+      if (service.name === 'matomo') {
+        service.callback = function(consent) { if (consent) loadMatomo(); };
+      }
     });
+  
+    window.klaroConfig = config;
+    klaro.setup(config);
+
   })();
   
   
