@@ -3,17 +3,24 @@
 // ============================================================
 
 (async function() {
+    // Wait until Klaro is defined
+    while (typeof klaro === 'undefined') {
+      await new Promise(r => setTimeout(r, 100));
+    }
+  
+    // Fetch the centralized Klaro configuration
     const res = await fetch('https://aki0202.github.io/cmp-config/cmp/klaro-config.json');
     const config = await res.json();
   
     window.klaroConfig = config;
+  
+    // Initialise Klaro only after the library is ready
     klaro.setup(config);
   
-    // Listen for Klaro consent changes (fires every time user accepts/rejects)
+    // Listen for Klaro consent changes
     document.addEventListener('klaroConsentChanged', e => {
       console.log('🔔 Klaro consent changed event:', e.detail);
   
-      // Check if Google Analytics consent was granted
       if (e.detail['google-analytics']) {
         console.log('GA consent changed → true');
         loadGA();
@@ -21,14 +28,13 @@
         console.log('GA consent changed → false');
       }
   
-      // Optional: Matomo support
       if (e.detail['matomo']) {
         console.log('Matomo consent changed → true');
         loadMatomo();
       }
     });
   
-    // Initialize default denied Consent Mode values
+    // Initialise default denied Consent Mode values
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('consent', 'default', {
