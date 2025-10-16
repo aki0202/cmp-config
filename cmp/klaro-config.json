@@ -1,0 +1,46 @@
+{
+  "version": 2,
+  "elementID": "klaro",
+  "storageMethod": "localStorage",
+  "storageName": "klaro",
+  "cookieExpiresAfterDays": 180,
+  "lang": "en",
+  "translations": {
+    "en": {
+      "privacyPolicyUrl": "/privacy-policy",
+      "consentModal": {
+        "title": "Cookie Preferences",
+        "description": "We use cookies to analyze traffic and improve your experience. You can manage your preferences below."
+      },
+      "consentNotice": {
+        "description": "We use cookies for analytics. Manage preferences anytime.",
+        "learnMore": "Customize"
+      },
+      "ok": "Accept all",
+      "decline": "Reject all"
+    }
+  },
+  "services": [
+    {
+      "name": "google-consent-mode",
+      "title": "Google Consent Mode v2",
+      "purposes": ["analytics"],
+      "required": true,
+      "optOut": false
+    },
+    {
+      "name": "google-analytics",
+      "title": "Google Analytics",
+      "purposes": ["analytics"],
+      "cookies": ["_ga", "_gid"],
+      "callback": "function(consent){if(consent){loadGA();}}"
+    },
+    {
+      "name": "matomo",
+      "title": "Matomo Analytics",
+      "purposes": ["analytics"],
+      "cookies": ["_pk_id*", "_pk_ses*"],
+      "callback": "function(consent){if(consent){loadMatomo();}}"
+    }
+  ]
+}
