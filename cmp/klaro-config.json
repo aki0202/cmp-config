@@ -32,15 +32,13 @@
       "name": "google-analytics",
       "title": "Google Analytics",
       "purposes": ["analytics"],
-      "cookies": ["_ga", "_gid"],
-      "callback": "function(consent){if(consent){loadGA();}}"
+      "cookies": ["_ga", "_gid"]
     },
     {
       "name": "matomo",
       "title": "Matomo Analytics",
       "purposes": ["analytics"],
-      "cookies": ["_pk_id*", "_pk_ses*"],
-      "callback": "function(consent){if(consent){loadMatomo();}}"
+      "cookies": ["_pk_id*", "_pk_ses*"]
     }
   ]
 }
